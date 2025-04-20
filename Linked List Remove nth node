@@ -1,0 +1,27 @@
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        // Step 1: Count total nodes
+        ListNode temp = head;
+        int count = 0;
+        while (temp != null) {
+            count++;
+            temp = temp.next;
+        }
+
+        // Step 2: If the node to remove is the head
+        if (count == n) {
+            return head.next;
+        }
+
+        // Step 3: Find the node before the one to delete
+        ListNode fast = head;
+        for (int i = 1; i < count - n; i++) {
+            fast = fast.next;
+        }
+
+        // Step 4: Remove the nth node from end
+        fast.next = fast.next.next;
+
+        return head;
+    }
+}
