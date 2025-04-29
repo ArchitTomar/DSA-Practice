@@ -1,0 +1,25 @@
+class Solution {
+    public void helper(List<List<Integer>> ans, List<Integer> arr, TreeNode root, int targetSum) {
+        if (root == null) return;
+
+        arr.add(root.val); // Add current node
+
+        // Check if it's a leaf and target is achieved
+        if (root.left == null && root.right == null && root.val == targetSum) {
+            ans.add(new ArrayList<>(arr));
+        } else {
+            // Recur for left and right subtrees
+            helper(ans, arr, root.left, targetSum - root.val);
+            helper(ans, arr, root.right, targetSum - root.val);
+        }
+
+        arr.remove(arr.size() - 1); // Backtrack
+    }
+
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> arr = new ArrayList<>();
+        helper(ans, arr, root, targetSum);
+        return ans;
+    }
+}
