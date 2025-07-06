@@ -1,0 +1,50 @@
+import java.util.Arrays;
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+
+        // Create dp table and fill with -1 (means not calculated yet)
+        int[][] dp = new int[n][amount + 1];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        // Call helper function
+        int ans = findMinCoins(coins, n - 1, amount, dp);
+
+        // If answer is very big, that means it's not possible
+        if (ans >= 1000000000) return -1;
+
+        return ans;
+    }
+
+    private int findMinCoins(int[] coins, int index, int target, int[][] dp) {
+        // Base case: Only first coin allowed
+        if (index == 0) {
+            if (target % coins[0] == 0) {
+                return target / coins[0];
+            } else {
+                return 1000000000; // Very big number (like infinity)
+            }
+        }
+
+        // If already calculated
+        if (dp[index][target] != -1) {
+            return dp[index][target];
+        }
+
+        // Choice 1: Not take the coin
+        int notTake = findMinCoins(coins, index - 1, target, dp);
+
+        // Choice 2: Take the coin (if possible)
+        int take = 1000000000;
+        if (coins[index] <= target) {
+            take = 1 + findMinCoins(coins, index, target - coins[index], dp);
+        }
+
+        // Store and return minimum
+        dp[index][target] = Math.min(take, notTake);
+        return dp[index][target];
+    }
+}
