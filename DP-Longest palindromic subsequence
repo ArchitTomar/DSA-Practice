@@ -1,0 +1,21 @@
+class Solution {
+    public int longestPalindromeSubseq(String s) {
+        int n = s.length();
+        String reversed = new StringBuilder(s).reverse().toString();
+
+        int[][] dp = new int[n + 1][n + 1];
+
+        // Fill the dp array using a bottom-up approach
+        for (int ind1 = 1; ind1 <= n; ind1++) {
+            for (int ind2 = 1; ind2 <= n; ind2++) {
+                if (s.charAt(ind1 - 1) == reversed.charAt(ind2 - 1)) {
+                    dp[ind1][ind2] = 1 + dp[ind1 - 1][ind2 - 1];
+                } else {
+                    dp[ind1][ind2] = Math.max(dp[ind1 - 1][ind2], dp[ind1][ind2 - 1]);
+                }
+            }
+        }
+
+        return dp[n][n];
+    }
+}
