@@ -1,0 +1,38 @@
+import java.util.*;
+
+public class SecondLargestElement {
+    public static void main(String[] args) {
+        // Example array
+        int[] arr = {10, 5, 20, 8, 15};
+
+        // Agar array me 2 se kam element hai, to second largest nahi hoga
+        if (arr.length < 2) {
+            System.out.println("Array me second largest element nahi ho sakta.");
+            return;
+        }
+
+        int largest = Integer.MIN_VALUE;
+        int secondLargest = Integer.MIN_VALUE;
+
+        // Array ke har element ko check karo
+        for (int num : arr) {
+            if (num > largest) {
+                // Agar current number largest se bada hai
+                // to secondLargest ko update karo purane largest se
+                secondLargest = largest;
+                largest = num;
+            } else if (num > secondLargest && num != largest) {
+                // Agar current number secondLargest se bada hai
+                // aur equal nahi hai largest ke, to update karo
+                secondLargest = num;
+            }
+        }
+
+        // Agar secondLargest change nahi hua to print karo - nahi mila
+        if (secondLargest == Integer.MIN_VALUE) {
+            System.out.println("Second largest element nahi mila.");
+        } else {
+            System.out.println("Second largest element hai: " + secondLargest);
+        }
+    }
+}
